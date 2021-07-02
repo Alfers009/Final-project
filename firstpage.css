@@ -3,16 +3,17 @@
     margin: 0;
     box-sizing: border-box;
 }
-.navbar-brand img {
-    height: 75px;
-}
 #navbarNavAltMarkup {
     justify-content: flex-end;
     text-transform: uppercase;
-    font-family: "Alegreya";
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 1.2em;
     color: #111;
+}
+img {
+    max-width: 100%;
+  height: auto;
 }
 #header-back {
     background-image: url(bg-header.jpg);
@@ -20,38 +21,4 @@
     /* parallax effect: */
     background-attachment: fixed;
     height: 100vh;
-}
-.navbar {
-    position: fixed;
-    width: 100vw;
-    opacity: 0.9;
-}
-#ambience {
-    background-image: url(ambiance.jpg);
-    background-size: cover;
-    height: 80vh;
-}
-p {
-    font-family: "Alegreya";
-    font-size: 1.2em;
-}
-h2 {
-    font-family: "Amatic SC";
-    font-weight: 700;
-    font-size: 3em;
-    text-align: center;
-}
-h2 span {
-    display: block;
-}
-h2 span:nth-child(1) {
-    color: #33baaf;
-    font-size: 0.7em;
-}
-h2 span:nth-child(1)::before, h2 span:nth-child(1)::after {
-    content: "-";
-    padding: 0.2em;
-}
-h2 span:nth-child(2) {
-    color: #f6af33;
 }
