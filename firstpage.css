@@ -22,3 +22,9 @@ img {
     background-attachment: fixed;
     height: 100vh;
 }
+
+#navbar-brand img{
+    height: 30;
+    width: 30;
+
+}
