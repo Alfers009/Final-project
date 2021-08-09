@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 
 							
-	//animate effect	
+		
 	$(".e_flash").hover(
 		function () {
 		$(this).addClass("animated flash");
@@ -110,7 +110,7 @@ jQuery(document).ready(function($) {
 		}
 	);	
 	
-	//Fading entrances
+	
 	$(".e_fadeIn").hover(
 		function () {
 		$(this).addClass("animated fadeIn");

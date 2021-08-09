@@ -136,7 +136,7 @@
 	height: 100%;
 	cursor: pointer;
 	text-decoration: none;
-	background: transparent url('blank.gif'); /* helps IE */
+	background: transparent url('blank.gif'); 
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	z-index: 8040;
 }
@@ -207,7 +207,7 @@ background-position-y: -72px;
 	overflow: visible !important;
 }
 
-/* Overlay helper */
+
 
 .fancybox-lock {
 	margin: 0!important;
@@ -234,7 +234,7 @@ background-position-y: -72px;
 	overflow-y: scroll;
 }
 
-/* Title helper */
+
 
 .fancybox-title {
 	visibility: hidden;
@@ -275,7 +275,7 @@ background-position-y: -72px;
 	display: inline-block;
 	margin-right: -100%;
 	padding: 2px 20px;
-	background: transparent; /* Fallback for web browsers that doesn't support RGBa */
+	background: transparent; 
 	background: rgba(0, 0, 0, 0.8);
 	-webkit-border-radius: 15px;
 	   -moz-border-radius: 15px;

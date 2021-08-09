@@ -1,30 +1,14 @@
-/*
 
-Quicksand 1.2.2
-
-Reorder and filter items with a nice shuffling animation.
-
-Copyright (c) 2010 Jacek Galanciak (razorjack.net) and agilope.com
-Big thanks for Piotr Petrus (riddle.pl) for deep code review and wonderful docs & demos.
-
-Dual licensed under the MIT and GPL version 2 licenses.
-http://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt
-http://github.com/jquery/jquery/blob/master/GPL-LICENSE.txt
-
-Project site: http://razorjack.net/quicksand
-Github site: http://github.com/razorjack/quicksand
-
-*/
 
 (function ($) {
     $.fn.quicksand = function (collection, customOptions) {     
         var options = {
             duration: 750,
             easing: 'swing',
-            attribute: 'data-id', // attribute to recognize same items within source and dest
-            adjustHeight: 'auto', // 'dynamic' animates height during shuffling (slow), 'auto' adjusts it before or after the animation, false leaves height constant
-            useScaling: true, // disable it if you're not using scaling effect or want to improve performance
-            enhancement: function(c) {}, // Visual enhacement (eg. font replacement) function for cloned elements
+            attribute: 'data-id', 
+            adjustHeight: 'auto', 
+            useScaling: true, 
+            enhancement: function(c) {}, 
             selector: '> *',
             dx: 0,
             dy: 0
@@ -32,7 +16,7 @@ Github site: http://github.com/razorjack/quicksand
         $.extend(options, customOptions);
         
         if ($.browser.msie || (typeof($.fn.scale) == 'undefined')) {
-            // Got IE and want scaling effect? Kiss my ass.
+            
             options.useScaling = false;
         }
         
@@ -46,35 +30,33 @@ Github site: http://github.com/razorjack/quicksand
         
         return this.each(function (i) {
             var val;
-            var animationQueue = []; // used to store all the animation params before starting the animation; solves initial animation slowdowns
-            var $collection = $(collection).clone(); // destination (target) collection
-            var $sourceParent = $(this); // source, the visible container of source collection
-            var sourceHeight = $(this).css('height'); // used to keep height and document flow during the animation
+            var animationQueue = []; 
+            var $collection = $(collection).clone();
+            var $sourceParent = $(this);
+            var sourceHeight = $(this).css('height'); 
             
             var destHeight;
             var adjustHeightOnCallback = false;
             
-            var offset = $($sourceParent).offset(); // offset of visible container, used in animation calculations
-            var offsets = []; // coordinates of every source collection item            
+            var offset = $($sourceParent).offset(); 
+            var offsets = [];            
             
-            var $source = $(this).find(options.selector); // source collection items
+            var $source = $(this).find(options.selector);
             
-            // Replace the collection and quit if IE6
+            
             if ($.browser.msie && $.browser.version.substr(0,1)<7) {
                 $sourceParent.html('').append($collection);
                 return;
             }
 
-            // Gets called when any animation is finished
-            var postCallbackPerformed = 0; // prevents the function from being called more than one time
+            
+            var postCallbackPerformed = 0;
             var postCallback = function () {
                 
                 if (!postCallbackPerformed) {
                     postCallbackPerformed = 1;
                     
-                    // hack: 
-                    // used to be: $sourceParent.html($dest.html()); // put target HTML into visible source container
-                    // but new webkit builds cause flickering when replacing the collections
+                    
                     $toDelete = $sourceParent.find('> *');
                     $sourceParent.prepend($dest.find('> *'));
                     $toDelete.remove();
@@ -82,14 +64,14 @@ Github site: http://github.com/razorjack/quicksand
                     if (adjustHeightOnCallback) {
                         $sourceParent.css('height', destHeight);
                     }
-                    options.enhancement($sourceParent); // Perform custom visual enhancements on a newly replaced collection
+                    options.enhancement($sourceParent); 
                     if (typeof callbackFunction == 'function') {
                         callbackFunction.call(this);
                     }                    
                 }
             };
             
-            // Position: relative situations
+            
             var $correctionParent = $sourceParent.offsetParent();
             var correctionOffset = $correctionParent.offset();
             if ($correctionParent.css('position') == 'relative') {
@@ -106,7 +88,7 @@ Github site: http://github.com/razorjack/quicksand
                 correctionOffset.left -= (parseFloat($correctionParent.css('margin-left')) || 0);
             }
             
-            // perform custom corrections from options (use when Quicksand fails to detect proper correction)
+            
             if (isNaN(correctionOffset.left)) {
                 correctionOffset.left = 0;
             }
@@ -117,19 +99,19 @@ Github site: http://github.com/razorjack/quicksand
             correctionOffset.left -= options.dx;
             correctionOffset.top -= options.dy;
 
-            // keeps nodes after source container, holding their position
+           
             $sourceParent.css('height', $(this).height());
             
-            // get positions of source collections
+            
             $source.each(function (i) {
                 offsets[i] = $(this).offset();
             });
             
-            // stops previous animations on source container
+            
             $(this).stop();
             var dx = 0; var dy = 0;
             $source.each(function (i) {
-                $(this).stop(); // stop animation of collection items
+                $(this).stop(); 
                 var rawObj = $(this).get(0);
                 if (rawObj.style.position == 'absolute') {
                     dx = -options.dx;
@@ -146,7 +128,7 @@ Github site: http://github.com/razorjack/quicksand
                 rawObj.style.left = (offsets[i].left - parseFloat(rawObj.style.marginLeft) - correctionOffset.left + dx) + 'px';
             });
                     
-            // create temporary container with destination collection
+           
             var $dest = $($sourceParent).clone();
             var rawDest = $dest.get(0);
             rawDest.innerHTML = '';
@@ -154,11 +136,7 @@ Github site: http://github.com/razorjack/quicksand
             rawDest.style.height = 'auto';
             rawDest.style.width = $sourceParent.width() + 'px';
             $dest.append($collection);      
-            // insert node into HTML
-            // Note that the node is under visible source container in the exactly same position
-            // The browser render all the items without showing them (opacity: 0.0)
-            // No offset calculations are needed, the browser just extracts position from underlayered destination items
-            // and sets animation to destination positions.
+            
             $dest.insertBefore($sourceParent);
             $dest.css('opacity', 0.0);
             rawDest.style.zIndex = -1;
@@ -173,22 +151,20 @@ Github site: http://github.com/razorjack/quicksand
             
 
             if (options.adjustHeight === 'dynamic') {
-                // If destination container has different height than source container
-                // the height can be animated, adjusting it to destination height
+                
                 $sourceParent.animate({height: $dest.height()}, options.duration, options.easing);
             } else if (options.adjustHeight === 'auto') {
                 destHeight = $dest.height();
                 if (parseFloat(sourceHeight) < parseFloat(destHeight)) {
-                    // Adjust the height now so that the items don't move out of the container
+                    
                     $sourceParent.css('height', destHeight);
                 } else {
-                    //  Adjust later, on callback
+                  
                     adjustHeightOnCallback = true;
                 }
             }
                 
-            // Now it's time to do shuffling animation
-            // First of all, we need to identify same elements within source and destination collections    
+              
             $source.each(function (i) {
                 var destElement = [];
                 if (typeof(options.attribute) == 'function') {
@@ -204,8 +180,7 @@ Github site: http://github.com/razorjack/quicksand
                     destElement = $collection.filter('[' + options.attribute + '=' + $(this).attr(options.attribute) + ']');
                 }
                 if (destElement.length) {
-                    // The item is both in source and destination collections
-                    // It it's under different position, let's move it
+                    
                     if (!options.useScaling) {
                         animationQueue.push(
                                             {
@@ -229,8 +204,7 @@ Github site: http://github.com/razorjack/quicksand
 
                     }
                 } else {
-                    // The item from source collection is not present in destination collections
-                    // Let's remove it
+                    
                     if (!options.useScaling) {
                         animationQueue.push({element: $(this), 
                                              animation: {opacity: '0.0'}});
@@ -242,7 +216,7 @@ Github site: http://github.com/razorjack/quicksand
             });
             
             $collection.each(function (i) {
-                // Grab all items from target collection not present in visible source collection
+               
                 
                 var sourceElement = [];
                 var destElement = [];
@@ -268,7 +242,7 @@ Github site: http://github.com/razorjack/quicksand
                 
                 var animationOptions;
                 if (sourceElement.length === 0) {
-                    // No such element in source collection...
+                    
                     if (!options.useScaling) {
                         animationOptions = {
                             opacity: '1.0'
@@ -279,14 +253,14 @@ Github site: http://github.com/razorjack/quicksand
                             scale: '1.0'
                         };
                     }
-                    // Let's create it
+                    
                     d = destElement.clone();
                     var rawDestElement = d.get(0);
                     rawDestElement.style.position = 'absolute';
                     rawDestElement.style.margin = '0';
                     rawDestElement.style.top = destElement.offset().top - correctionOffset.top + 'px';
                     rawDestElement.style.left = destElement.offset().left - correctionOffset.left + 'px';
-                    d.css('opacity', 0.0); // IE
+                    d.css('opacity', 0.0); 
                     if (options.useScaling) {
                         d.css('transform', 'scale(0.0)');
                     }
@@ -298,7 +272,7 @@ Github site: http://github.com/razorjack/quicksand
             });
             
             $dest.remove();
-            options.enhancement($sourceParent); // Perform custom visual enhancements during the animation
+            options.enhancement($sourceParent); 
             for (i = 0; i < animationQueue.length; i++) {
                 animationQueue[i].element.animate(animationQueue[i].animation, options.duration, options.easing, postCallback);
             }
