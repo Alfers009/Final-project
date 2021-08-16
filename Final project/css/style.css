@@ -27,7 +27,7 @@ h1,h2, h3, h4, h5, h6 {
 }
  
 .container {
-	padding:0 20px 0 20px;
+	padding: 20px 0 20px;
 	position:relative;
 }
 
@@ -48,6 +48,7 @@ h1,h2, h3, h4, h5, h6 {
 .row.nomargin,.row-fluid.nomargin {
 	margin-bottom:0;
 }
+
 
 img.img-polaroid {
 	margin:0 0 20px 0;
@@ -936,7 +937,7 @@ blockquote cite a:visited 				{ color:#555; }
 
 /* button*/
 .btn{text-align: center;
-background: #14987F;
+background: #0e8898;
 color: #fff;
 border-radius: 0;border: 0;}
 .btn-theme {
@@ -1200,7 +1201,7 @@ border: 1px solid #e6e6e6;
 
 .pricing-box-item .pricing-terms {
 	text-align: center;
-	background: #0E987E;
+	background: #0e8898;
 	display: block;
 	overflow: hidden;
 	padding: 11px 0 5px; 
