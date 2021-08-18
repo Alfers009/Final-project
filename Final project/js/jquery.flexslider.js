@@ -860,7 +860,6 @@
   }
 
 
-  //FlexSlider: Plugin Function
   $.fn.flexslider = function(options) {
     if (options === undefined) options = {};
     
@@ -878,7 +877,6 @@
         }
       });
     } else {
-      // Helper strings to quickly perform functions on the slider
       var $slider = $(this).data('flexslider');
       switch (options) {
         case "play": $slider.play(); break;
